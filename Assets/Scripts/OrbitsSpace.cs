@@ -8,39 +8,45 @@ public class OrbitsSpace : MonoBehaviour
     public Vector2 moveVector;
     private Space orbitsSpace;
     private ParticleSystem bloodTrailParticles;
+    private Rigidbody2D rigidBody;
 
     private void Awake()
     {
         orbitsSpace = GetComponentInParent<Space>();
         bloodTrailParticles = GetComponentInChildren<ParticleSystem>();
+        rigidBody = GetComponent<Rigidbody2D>();
+    }
+
+    private void Start()
+    {
+        rigidBody.AddRelativeForce(moveVector,ForceMode2D.Impulse);
     }
 
     private void Update()
     {
-        transform.Translate(moveVector * Time.deltaTime * 60f, UnityEngine.Space.Self);
-        if (transform.localPosition.x > orbitsSpace.bounds.x / 2)
+        if (rigidBody.position.x > orbitsSpace.bounds.x / 2)
         {
             PauseBloodTrail();
-            transform.localPosition = new Vector2(transform.localPosition.x - orbitsSpace.bounds.x, transform.localPosition.y);
+            rigidBody.position = new Vector2(transform.localPosition.x - orbitsSpace.bounds.x, transform.localPosition.y);
             ResumeBloodTrail();
         }
-        else if (transform.localPosition.x < -orbitsSpace.bounds.x / 2)
+        else if (rigidBody.position.x < -orbitsSpace.bounds.x / 2)
         {
             PauseBloodTrail();
-            transform.localPosition = new Vector2(transform.localPosition.x + orbitsSpace.bounds.x, transform.localPosition.y);
+            rigidBody.position = new Vector2(transform.localPosition.x + orbitsSpace.bounds.x, transform.localPosition.y);
             ResumeBloodTrail();
         }
 
-        if (transform.localPosition.y > orbitsSpace.bounds.y / 2)
+        if (rigidBody.position.y > orbitsSpace.bounds.y / 2)
         {
             PauseBloodTrail();
-            transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y - orbitsSpace.bounds.y);
+            rigidBody.position = new Vector2(transform.localPosition.x, transform.localPosition.y - orbitsSpace.bounds.y);
             ResumeBloodTrail();
         }
-        else if (transform.localPosition.x < -orbitsSpace.bounds.x / 2)
+        else if (rigidBody.position.y < -orbitsSpace.bounds.y / 2)
         {
             PauseBloodTrail();
-            transform.localPosition = new Vector2(transform.localPosition.x, transform.localPosition.y + orbitsSpace.bounds.y);
+            rigidBody.position = new Vector2(transform.localPosition.x, transform.localPosition.y + orbitsSpace.bounds.y);
             ResumeBloodTrail();
         }
     }

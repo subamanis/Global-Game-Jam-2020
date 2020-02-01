@@ -12,14 +12,10 @@ public class Space : MonoBehaviour
         Gizmos.DrawWireCube(transform.position, bounds);
     }
 
-    void Start()
+    void Awake()
     {
-        
+        Application.targetFrameRate = 60;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+
 }
