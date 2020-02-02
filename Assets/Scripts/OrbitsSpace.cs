@@ -14,6 +14,8 @@ public class OrbitsSpace : MonoBehaviour
     public float maxVelocity = 10f;
     public float maxAngularVelocity = 90f;
 
+    public AudioSource pickup;
+
     private void Awake()
     {
         orbitsSpace = GetComponentInParent<Space>();
@@ -105,6 +107,7 @@ public class OrbitsSpace : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("HumanPart") && this.gameObject.CompareTag("HumanPart"))
         {
+            pickup.Play();
             if (this.transform.GetSiblingIndex() > collision.transform.GetSiblingIndex())
             {
                 this.gameObject.transform.SetParent(collision.transform, worldPositionStays: true);
