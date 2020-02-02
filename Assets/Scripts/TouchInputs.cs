@@ -53,17 +53,20 @@ public class TouchInputs : MonoBehaviour
             var currentValue = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             var delta = (currentValue - prevValue) * Time.deltaTime * deltaSmoothFactor;
 
-            if (userInputMode == Modes.Fling && Mathf.Abs(currentValue.x - prevValue.x) > flingDelta)
+            if (userInputMode == Modes.Fling  )
             {
-                if (delta.x > flingDelta)
+                if (Mathf.Abs(currentValue.x - prevValue.x) > flingDelta)
                 {
-                    UserChangesLimb(previous: true);
+                    if (delta.x > flingDelta)
+                    {
+                        UserChangesLimb(previous: true);
+                    }
+                    else if (delta.x < -flingDelta)
+                    {
+                        UserChangesLimb(previous: false);
+                    }
+                    userInputMode = Modes.None; // No more fling for this user action
                 }
-                else if (delta.x < -flingDelta)
-                {
-                    UserChangesLimb(previous: false);
-                }
-                userInputMode = Modes.None; // No more fling for this user action
             }
             else
             {

@@ -925,7 +925,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spaceGameManager: {fileID: 509432837}
   deltaSmoothFactor: 600
-  flingDelta: 0.1
+  flingDelta: 0.2
   speedIndicator: {fileID: 1511482789}
   rotationIndicator: {fileID: 2076897460}
   switchIndicator: {fileID: 623064826}
@@ -1717,15 +1717,20 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemOrbitingMeteor1 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 7391376047668204552, guid: faee17685035efb429d75bdaa97e55b4,
+        type: 3}
+      propertyPath: startWithRandomVelocity
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7391376047668204553, guid: faee17685035efb429d75bdaa97e55b4,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 15.1
+      value: 0.24
       objectReference: {fileID: 0}
     - target: {fileID: 7391376047668204553, guid: faee17685035efb429d75bdaa97e55b4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 13
+      value: 14.76
       objectReference: {fileID: 0}
     - target: {fileID: 7391376047668204553, guid: faee17685035efb429d75bdaa97e55b4,
         type: 3}

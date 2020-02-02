@@ -34,12 +34,14 @@ public class OrbitsSpace : MonoBehaviour
 
     internal void ChangeRotation(float delta)
     {
-        rigidBody.AddTorque(delta);
+        if (rigidBody != null)
+            rigidBody.AddTorque(delta);
     }
 
     internal void ChangeSpeed(float delta)
     {
-        rigidBody.AddForce(-rigidBody.transform.up * delta, ForceMode2D.Impulse);
+        if (rigidBody != null)
+            rigidBody.AddForce(-rigidBody.transform.up * delta, ForceMode2D.Impulse);
     }
 
     private void FixedUpdate()
@@ -115,10 +117,10 @@ public class OrbitsSpace : MonoBehaviour
 
     private void DisableThisObjectAsOrbitsSpace()
     {
+        spaceGameManager.LimbWasAttached(this);
+
         Destroy(this.rigidBody);
         Destroy(this.GetComponent<Collider2D>());
         Destroy(this);
-
-        spaceGameManager.LimbWasAttached(this);
     }
 }
