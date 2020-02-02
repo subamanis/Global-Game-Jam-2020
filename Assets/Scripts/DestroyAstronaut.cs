@@ -7,6 +7,7 @@ using UnityEngine;
 public class DestroyAstronaut : MonoBehaviour
 {
     public PropulsionAccident propulsionAccident;
+    public GameObject winConditionText;
 
     public float initialDelay = 2f;
     public float reenableCollisions = 1f;
@@ -19,6 +20,7 @@ public class DestroyAstronaut : MonoBehaviour
 
     private void Awake()
     {
+        winConditionText.SetActive(false);
         itemsToExplode = GetComponentsInChildren<OrbitsSpace>().Union(extraItemsToIgnoreCollisions).ToArray();
     }
 
@@ -62,6 +64,7 @@ public class DestroyAstronaut : MonoBehaviour
         {
             // We have a whole astronaut
             Debug.Log("You win");
+            winConditionText.SetActive(true);
         }
     }
 }
