@@ -33,7 +33,7 @@ public class PropulsionAccident : MonoBehaviour
             currentTime += Time.deltaTime;
             var currentValue = fireAnimationCurve.Evaluate(currentTime / accidentDuration);
 
-            fireObject.SetActive(currentValue > .5f);
+            fireObject.SetActive(currentValue > .1f);
         }
     }
 }

@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class DestroyAstronaut : MonoBehaviour
 {
@@ -65,6 +67,20 @@ public class DestroyAstronaut : MonoBehaviour
             // We have a whole astronaut
             Debug.Log("You win");
             winConditionText.SetActive(true);
+            winConditionText.transform.DOScale(0.5f, 0.9f).From().SetEase(Ease.OutElastic).Play();
+
+            Sequence restartGame = DOTween.Sequence();
+            
+            restartGame.AppendInterval(2.0f);
+            
+            restartGame.OnComplete(() => {
+            
+                Debug.Log("Restarting...");
+                SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
+            
+            })
+            .Play();
+
         }
     }
 }
