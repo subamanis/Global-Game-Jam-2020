@@ -85,7 +85,7 @@ public class SpaceGameManager : MonoBehaviour
                 ++listCounter;
             }
         }
-        return bodyParts[listCounter];
+        return bodyParts[Mathf.Clamp(listCounter, 0, bodyParts.Count - 1)];
     }
 
     internal void LimbWasAttached(OrbitsSpace orbitsSpace)

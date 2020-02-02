@@ -71,7 +71,7 @@ public class DestroyAstronaut : MonoBehaviour
 
             Sequence restartGame = DOTween.Sequence();
             
-            restartGame.AppendInterval(2.0f);
+            restartGame.AppendInterval(7.0f);
             
             restartGame.OnComplete(() => {
             
