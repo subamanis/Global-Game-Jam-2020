@@ -100,7 +100,8 @@ public class TouchInputs : MonoBehaviour
             (previous ? 1 : -1) * Mathf.Abs(switchIndicator.transform.localScale.x),
             switchIndicator.transform.localScale.y,
             switchIndicator.transform.localScale.z);
-        spaceGameManager.UserChangesLimb(previous);
+
+        spaceGameManager.userSelectedObject =  spaceGameManager.UserChangesLimb(previous);
     }
 
     private void UserChangesRotation(float delta)
