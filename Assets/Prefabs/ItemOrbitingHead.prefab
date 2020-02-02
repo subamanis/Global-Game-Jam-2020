@@ -159,6 +159,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ItemOrbitingHead
       objectReference: {fileID: 0}
+    - target: {fileID: 2945718644083113018, guid: f957105f679747e4cbf18fec418b345e,
+        type: 3}
+      propertyPath: m_TagString
+      value: HumanPart
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f957105f679747e4cbf18fec418b345e, type: 3}
 --- !u!1 &6096186772832957623 stripped

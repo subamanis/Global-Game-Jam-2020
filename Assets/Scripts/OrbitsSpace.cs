@@ -85,4 +85,12 @@ public class OrbitsSpace : MonoBehaviour
         bloodTrailParticles.Pause();
         //emission.enabled = false;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("HumanPart"))
+        {
+
+        }
+    }
 }
