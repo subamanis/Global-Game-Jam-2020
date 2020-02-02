@@ -284,8 +284,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.3
-      minScalar: 0.1
+      scalar: 0.6
+      minScalar: 0.3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4799,6 +4799,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d05e1a27f01a6c478a1ba3b5dee9081, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startWithRandomVelocity: 0
   maxVelocity: 5
   maxAngularVelocity: 90
 --- !u!50 &1137485614548502988
@@ -4820,7 +4821,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 0
 --- !u!212 &2899980452761045172
 SpriteRenderer:
