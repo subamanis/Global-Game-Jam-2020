@@ -8,7 +8,9 @@ public class OrbitsSpace : MonoBehaviour
     private Space orbitsSpace;
     private ParticleSystem bloodTrailParticles;
     private Rigidbody2D rigidBody;
+    private SpaceGameManager spaceGameManager;
 
+    public bool startWithRandomVelocity = false;
     public float maxVelocity = 10f;
     public float maxAngularVelocity = 90f;
 
@@ -17,6 +19,17 @@ public class OrbitsSpace : MonoBehaviour
         orbitsSpace = GetComponentInParent<Space>();
         bloodTrailParticles = GetComponentInChildren<ParticleSystem>();
         rigidBody = GetComponent<Rigidbody2D>();
+
+        spaceGameManager = FindObjectOfType<SpaceGameManager>();
+    }
+
+    private void Start()
+    {
+        if (startWithRandomVelocity)
+        {
+            var randomDirection = UnityEngine.Random.insideUnitSphere * UnityEngine.Random.Range(1, 5);
+            rigidBody.AddRelativeForce(randomDirection, ForceMode2D.Impulse);
+        }
     }
 
     internal void ChangeRotation(float delta)
@@ -74,23 +87,38 @@ public class OrbitsSpace : MonoBehaviour
 
     private void ResumeBloodTrail()
     {
-        ParticleSystem.EmissionModule emission = bloodTrailParticles.emission;
+        ParticleSystem.EmissionModule? emission = bloodTrailParticles?.emission;
         //emission.enabled = true;
-        bloodTrailParticles.Play();
+        bloodTrailParticles?.Play();
     }
 
     private void PauseBloodTrail()
     {
-        ParticleSystem.EmissionModule emission = bloodTrailParticles.emission;
-        bloodTrailParticles.Pause();
+        ParticleSystem.EmissionModule? emission = bloodTrailParticles?.emission;
+        bloodTrailParticles?.Pause();
         //emission.enabled = false;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("HumanPart"))
+        if (collision.gameObject.CompareTag("HumanPart") && this.gameObject.CompareTag("HumanPart"))
         {
+            if (this.transform.GetSiblingIndex() > collision.transform.GetSiblingIndex())
+            {
+                this.gameObject.transform.SetParent(collision.transform, worldPositionStays: true);
+                DisableThisObjectAsOrbitsSpace();
 
+                GetComponentInParent<DestroyAstronaut>().CheckIfAllParts();
+            }
         }
+    }
+
+    private void DisableThisObjectAsOrbitsSpace()
+    {
+        Destroy(this.rigidBody);
+        Destroy(this.GetComponent<Collider2D>());
+        Destroy(this);
+
+        spaceGameManager.LimbWasAttached(this);
     }
 }

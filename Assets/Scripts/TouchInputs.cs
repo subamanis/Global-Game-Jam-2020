@@ -35,11 +35,11 @@ public class TouchInputs : MonoBehaviour
             var viewPort = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             prevValue = viewPort;
 
-            if (viewPort.x > .7f)
+            if (viewPort.x > .75f)
             {
                 userInputMode = Modes.Rotation;
             }
-            else if (viewPort.x < 1 - .7f)
+            else if (viewPort.x < 1 - .75f)
             {
                 userInputMode = Modes.Speed;
             }
@@ -53,7 +53,7 @@ public class TouchInputs : MonoBehaviour
             var currentValue = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             var delta = (currentValue - prevValue) * Time.deltaTime * deltaSmoothFactor;
 
-            if (userInputMode == Modes.Fling)
+            if (userInputMode == Modes.Fling && Mathf.Abs(currentValue.x - prevValue.x) > flingDelta)
             {
                 if (delta.x > flingDelta)
                 {
@@ -63,18 +63,21 @@ public class TouchInputs : MonoBehaviour
                 {
                     UserChangesLimb(previous: false);
                 }
+                userInputMode = Modes.None; // No more fling for this user action
             }
-
-            if (userInputMode == Modes.Speed)
+            else
             {
-                UserChangesSpeed(delta.y);
-            }
-            else if (userInputMode == Modes.Rotation)
-            {
-                UserChangesRotation(delta.y);
-            }
+                if (userInputMode == Modes.Speed)
+                {
+                    UserChangesSpeed(delta.y);
+                }
+                else if (userInputMode == Modes.Rotation)
+                {
+                    UserChangesRotation(delta.y);
+                }
 
-            prevValue = currentValue;
+                prevValue = currentValue;
+            }
         }
         else if (Input.GetMouseButtonUp(0))
         {
@@ -100,7 +103,8 @@ public class TouchInputs : MonoBehaviour
             (previous ? 1 : -1) * Mathf.Abs(switchIndicator.transform.localScale.x),
             switchIndicator.transform.localScale.y,
             switchIndicator.transform.localScale.z);
-        spaceGameManager.UserChangesLimb(previous);
+
+        spaceGameManager.userSelectedObject = spaceGameManager.UserChangesLimb(previous);
     }
 
     private void UserChangesRotation(float delta)
