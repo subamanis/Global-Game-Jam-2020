@@ -18,6 +18,7 @@ public class PropulsionAccident : MonoBehaviour
         accidentHappening = true;
         accidentDuration = duration;
         Invoke(nameof(AccidentDone), duration);
+        
     }
 
     private void AccidentDone()
@@ -31,7 +32,7 @@ public class PropulsionAccident : MonoBehaviour
         if (accidentHappening)
         {
             currentTime += Time.deltaTime;
-            var currentValue = fireAnimationCurve.Evaluate(currentTime / accidentDuration);
+            var currentValue = fireAnimationCurve.Evaluate(currentTime / accidentDuration);GameObject.Instantiate(Resources.Load<GameObject>("ExplosionLight"), gameObject.transform.position, Quaternion.identity);
 
             fireObject.SetActive(currentValue > .1f);
         }
