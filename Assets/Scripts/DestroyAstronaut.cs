@@ -1,26 +1,32 @@
 ﻿using System;
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class DestroyAstronaut : MonoBehaviour
 {
+    public PropulsionAccident propulsionAccident;
+
     public float initialDelay = 2f;
     public float reenableCollisions = 1f;
     public float explosionForce = 10f;
     public float explosionRadius = 20f;
 
+    public OrbitsSpace[] extraItemsToIgnoreCollisions;
+
     private OrbitsSpace[] itemsToExplode;
 
     private void Awake()
     {
-        itemsToExplode = GetComponentsInChildren<OrbitsSpace>();
+        itemsToExplode = GetComponentsInChildren<OrbitsSpace>().Union(extraItemsToIgnoreCollisions).ToArray();
     }
 
     void Start()
     {
         SetIgnoreCollisions(true);
         Invoke(nameof(ExplodeAstronaut), initialDelay);
+        propulsionAccident.SetAccidentTime(initialDelay);
     }
 
     private void SetIgnoreCollisions(bool ignore)
