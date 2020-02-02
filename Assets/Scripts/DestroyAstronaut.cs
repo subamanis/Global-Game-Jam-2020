@@ -11,7 +11,7 @@ public class DestroyAstronaut : MonoBehaviour
     public PropulsionAccident propulsionAccident;
     public GameObject winConditionText;
 
-    public float initialDelay = 2f;
+    public float initialDelay = 3.3f;
     public float reenableCollisions = 1f;
     public float explosionForce = 10f;
     public float explosionRadius = 20f;

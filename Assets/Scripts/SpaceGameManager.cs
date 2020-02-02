@@ -11,6 +11,11 @@ public class SpaceGameManager : MonoBehaviour
     List<Transform> bodyParts = new List<Transform>();
     int listCounter = 0;
 
+    public AudioSource backgroundMusic;
+    public AudioSource engineFailure;
+    public AudioSource explosion;
+    int coroutineCounter = 0;
+
     private void Start()
     {
         Transform partsParent = FindObjectOfType<Space>().transform.Find("WholeAstronaut");
@@ -18,6 +23,25 @@ public class SpaceGameManager : MonoBehaviour
         {
             bodyParts.Add(child);
         }
+
+        backgroundMusic.Play();
+
+        engineFailure.Play();
+        StartCoroutine(PlayEngineFailure());
+        StartCoroutine(PlayExplosion());
+    }
+
+    IEnumerator PlayEngineFailure()
+    {
+        yield return new WaitForSeconds(.6f);
+        engineFailure.Play();
+        if (coroutineCounter++ < 2) StartCoroutine(PlayEngineFailure());
+    }
+
+    IEnumerator PlayExplosion()
+    {
+        yield return new WaitForSeconds(3.25f);
+        explosion.Play();
     }
 
     public OrbitsSpace UserChangesLimb(bool previous)

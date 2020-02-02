@@ -22,6 +22,13 @@ public class TouchInputs : MonoBehaviour
     public Image speedIndicator;
     public Image rotationIndicator;
     public Image switchIndicator;
+    public Image touchPoint;
+    private Canvas uiCanvas;
+
+    private void Awake()
+    {
+        uiCanvas = GetComponentInChildren<Canvas>();
+    }
 
     private void Start()
     {
@@ -32,6 +39,8 @@ public class TouchInputs : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+            touchPoint.enabled = true;
+            MoveTouchPointToMouse();
             var viewPort = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             prevValue = viewPort;
 
@@ -50,6 +59,7 @@ public class TouchInputs : MonoBehaviour
         }
         else if (Input.GetMouseButton(0))
         {
+            MoveTouchPointToMouse();
             var currentValue = Camera.main.ScreenToViewportPoint(Input.mousePosition);
             var delta = (currentValue - prevValue) * Time.deltaTime * deltaSmoothFactor;
 
@@ -91,11 +101,18 @@ public class TouchInputs : MonoBehaviour
         }
     }
 
+    private void MoveTouchPointToMouse()
+    {
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(uiCanvas.transform as RectTransform, Input.mousePosition, uiCanvas.worldCamera, out Vector2 pos);
+        touchPoint.transform.position = uiCanvas.transform.TransformPoint(pos);
+    }
+
     private void ResetIndicators()
     {
         switchIndicator.DOFade(0f, .2f);
         rotationIndicator.DOFade(0f, .2f);
         speedIndicator.DOFade(0f, .2f);
+        touchPoint.enabled = false;
     }
 
     private void UserChangesLimb(bool previous)
