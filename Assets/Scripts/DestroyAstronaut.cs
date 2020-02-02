@@ -49,4 +49,13 @@ public class DestroyAstronaut : MonoBehaviour
     {
         SetIgnoreCollisions(false);
     }
+
+    internal void CheckIfAllParts()
+    {
+        if (transform.childCount == 1)
+        {
+            // We have a whole astronaut
+            Debug.Log("You win");
+        }
+    }
 }

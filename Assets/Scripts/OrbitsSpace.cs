@@ -90,7 +90,20 @@ public class OrbitsSpace : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("HumanPart"))
         {
+            if (this.transform.GetSiblingIndex() > collision.transform.GetSiblingIndex())
+            {
+                this.gameObject.transform.SetParent(collision.transform, worldPositionStays: true);
+                DisableThisObjectAsOrbitsSpace();
 
+                GetComponentInParent<DestroyAstronaut>().CheckIfAllParts();
+            }
         }
+    }
+
+    private void DisableThisObjectAsOrbitsSpace()
+    {
+        Destroy(this.rigidBody);
+        Destroy(this.GetComponent<Collider2D>());
+        Destroy(this);
     }
 }
