@@ -56,7 +56,16 @@ public class SpaceGameManager : MonoBehaviour
             {
                 listCounter = 0;
             }
+            else
+            {
+                ++listCounter;
+            }
         }
         return bodyParts[listCounter];
+    }
+
+    internal void LimbWasAttached(OrbitsSpace orbitsSpace)
+    {
+        bodyParts.Remove(orbitsSpace.transform);
     }
 }
