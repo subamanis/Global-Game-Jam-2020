@@ -5,10 +5,12 @@ using UnityEngine;
 
 public class OrbitsSpace : MonoBehaviour
 {
-    public Vector2 moveVector;
     private Space orbitsSpace;
     private ParticleSystem bloodTrailParticles;
     private Rigidbody2D rigidBody;
+
+    public float maxVelocity = 10f;
+    public float maxAngularVelocity = 90f;
 
     private void Awake()
     {
@@ -17,12 +19,17 @@ public class OrbitsSpace : MonoBehaviour
         rigidBody = GetComponent<Rigidbody2D>();
     }
 
-    private void Start()
+    internal void ChangeRotation(float delta)
     {
-        rigidBody.AddRelativeForce(moveVector,ForceMode2D.Impulse);
+        rigidBody.AddTorque(delta);
     }
 
-    private void Update()
+    internal void ChangeSpeed(float delta)
+    {
+        rigidBody.AddForce(-rigidBody.transform.up * delta, ForceMode2D.Impulse);
+    }
+
+    private void FixedUpdate()
     {
         if (rigidBody.position.x > orbitsSpace.bounds.x / 2)
         {
@@ -49,6 +56,20 @@ public class OrbitsSpace : MonoBehaviour
             rigidBody.position = new Vector2(transform.localPosition.x, transform.localPosition.y + orbitsSpace.bounds.y);
             ResumeBloodTrail();
         }
+
+        LimitMaxVelocity();
+    }
+
+    private void LimitMaxVelocity()
+    {
+        float curSpeed = rigidBody.velocity.magnitude;
+        if (curSpeed > maxVelocity)
+        {
+            float reduction = maxVelocity / curSpeed;
+            rigidBody.velocity *= reduction;
+        }
+
+        rigidBody.angularVelocity = Mathf.Clamp(rigidBody.angularVelocity, -maxAngularVelocity, maxAngularVelocity);
     }
 
     private void ResumeBloodTrail()
