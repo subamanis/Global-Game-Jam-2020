@@ -14,3 +14,8 @@ The game screen is split in 3 parts. Touch the left side and swipe left and righ
 
 You have to bring all the pieces together! Try to beat the game in the quickest time possible!
 
+
+
+**Music Credits**
+
+Royalty-free music by Asobeat
