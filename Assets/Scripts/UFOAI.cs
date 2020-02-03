@@ -17,6 +17,10 @@ public class UFOAI : MonoBehaviour
 
     public bool chasing = false;
 
+    float chaseInterval;
+
+    Sequence chasingSequence;
+
     void Awake()
     {
         thisRigidbody = GetComponent<Rigidbody2D>();
@@ -40,9 +44,27 @@ public class UFOAI : MonoBehaviour
         limbChildToFollow = Random.Range(0, 5);
         gameObjectLimbToFollow = player.transform.GetChild(limbChildToFollow).gameObject;
 
-        speed = Random.Range(0.5f, 1.3f);
+        speed = Random.Range(0.5f, 2.3f);
 
+    }
 
+    public void ActivateUFO() 
+    {
+        chaseInterval = Random.Range(0.5f, 2.3f);
+
+        chasingSequence = DOTween.Sequence();
+        
+        chasingSequence.InsertCallback(chaseInterval, () => chasing = true);
+
+        chasingSequence.InsertCallback(chaseInterval*20, () => chasing = false);
+        
+        chasingSequence.SetLoops(-1).SetLink(gameObject).Play();
+    }
+
+     public void DeactivateUFO() 
+    {
+        chasingSequence?.Kill();
+        chasing = false;
     }
 
     void Update() {
