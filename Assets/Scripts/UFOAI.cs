@@ -64,10 +64,10 @@ public class UFOAI : MonoBehaviour
 
             Vector2 direction = new Vector2(collision.contacts[0].point.x, collision.contacts[0].point.y) - new Vector2(transform.position.x, transform.position.y);
 
-            //direction = -direction.normalized;
-
             float force = 600;
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(direction*force);
+
+            gameObject.GetComponent<Rigidbody2D>().AddForce(-direction.normalized*force);
 
         //}
     }
