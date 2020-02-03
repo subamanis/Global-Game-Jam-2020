@@ -16,6 +16,15 @@ public class DestroyAstronaut : MonoBehaviour
     public float explosionForce = 10f;
     public float explosionRadius = 20f;
 
+    public TouchInputs touchInputs;
+
+    public AudioSource soundJingleComplete;
+    public AudioSource soundBackgroundMusic;
+
+    public AudioSource playerHitScream;
+
+    public ParticleSystem particlesExplosion;
+
     public OrbitsSpace[] extraItemsToIgnoreCollisions;
 
     private OrbitsSpace[] itemsToExplode;
@@ -50,9 +59,43 @@ public class DestroyAstronaut : MonoBehaviour
         {
             var rigidBodyToExplode = item.GetComponent<Rigidbody2D>();
             Rigidbody2DExtension.AddExplosionForce(rigidBodyToExplode, explosionForce, transform.position, explosionRadius);
+            rigidBodyToExplode.AddTorque(UnityEngine.Random.Range(-500, 500), ForceMode2D.Force);
         }
 
+        ShowExplosionFX();
+        ActivateAllEnemies();
+
         Invoke(nameof(EnableAllCollisions), reenableCollisions);
+        AllowPlayerControl();
+    }
+
+    private void AllowPlayerControl()
+    {
+        touchInputs.controlsEnabled = true;
+        //CheckIfAllParts(true); // for testing animations
+    }
+
+    private void ShowExplosionFX()
+    {
+        particlesExplosion.transform.position = gameObject.transform.position;
+        particlesExplosion.Play();
+        playerHitScream.Play();
+    }
+
+    private void ActivateAllEnemies()
+    {
+        UFOAI[] ufos = FindObjectsOfType<UFOAI>();
+        foreach (UFOAI ufo in ufos) {
+            ufo.chasing = true;
+        }
+    }
+
+    private void DeactivateAllEnemies()
+    {
+        UFOAI[] ufos = FindObjectsOfType<UFOAI>();
+        foreach (UFOAI ufo in ufos) {
+            ufo.chasing = false;
+        }
     }
 
     private void EnableAllCollisions()
@@ -60,18 +103,30 @@ public class DestroyAstronaut : MonoBehaviour
         SetIgnoreCollisions(false);
     }
 
-    internal void CheckIfAllParts()
+    internal void CheckIfAllParts(bool test = false)
     {
-        if (transform.childCount == 1)
+        if (transform.childCount == 1 || test)
         {
             // We have a whole astronaut
             Debug.Log("You win");
+
+            soundBackgroundMusic.Stop();
+            soundJingleComplete.Play();
+
+            DeactivateAllEnemies();
+
             winConditionText.SetActive(true);
-            winConditionText.transform.DOScale(0.5f, 0.9f).From().SetEase(Ease.OutElastic).Play();
+            winConditionText.transform.GetChild(0).transform.DOScale(0.5f, 0.9f).From().SetEase(Ease.OutElastic).Play();
 
             Sequence restartGame = DOTween.Sequence();
             
-            restartGame.AppendInterval(7.0f);
+            restartGame.AppendInterval(10.0f);
+
+            restartGame.InsertCallback(9, () => {
+
+                winConditionText.transform.GetChild(0).transform.DOScale(0f, 0.3f).SetEase(Ease.InBack).Play();
+
+            });
             
             restartGame.OnComplete(() => {
             

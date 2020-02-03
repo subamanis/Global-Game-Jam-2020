@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
 
@@ -12,6 +12,8 @@ public class TitleScreen : MonoBehaviour
 
     public AudioClip soundStart;
     private AudioSource soundStartAudioSource;
+
+    public Image startButtonImage;
 
     void Start()
     {
@@ -26,8 +28,23 @@ public class TitleScreen : MonoBehaviour
 
     public void OnStartButtonTap()
     {
+        startButtonImage.GetComponent<Button>().interactable = false;
+        
         soundStartAudioSource.PlayOneShot(soundStart);
-        SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Single);
+        
+        startButtonImage.color = new Color(1, 1, 1, 1);
+        startButtonImage.GetComponent<StartButtonBlink>().blinkMultiplier = 8;
+
+        Sequence startLevelSequence = DOTween.Sequence();
+        
+        startLevelSequence.AppendInterval(1);
+        
+        startLevelSequence.OnComplete(() => {
+        
+            SceneManager.LoadSceneAsync(sceneToLoad, LoadSceneMode.Single);
+        
+        })
+        .Play();
     }
 
 

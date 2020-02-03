@@ -324,7 +324,7 @@ MonoBehaviour:
     m_SelectOnDown: {fileID: 0}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
-  m_Transition: 1
+  m_Transition: 0
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -409,6 +409,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startButton: {fileID: 260504587}
+  img: {fileID: 260504590}
+  blinkMultiplier: 4
 --- !u!1 &602743392
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,6 +509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneToLoad: GameJamScene
   soundStart: {fileID: 8300000, guid: 11e50a7eee36ffb4a831292b7e8ae79b, type: 3}
+  startButtonImage: {fileID: 260504590}
 --- !u!1 &893194865
 GameObject:
   m_ObjectHideFlags: 0
@@ -752,7 +755,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Global Game Jam 2020
+  m_Text: Team Missing Limbs | Global Game Jam 2020
 --- !u!222 &1714429280
 CanvasRenderer:
   m_ObjectHideFlags: 0

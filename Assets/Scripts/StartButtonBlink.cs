@@ -1,6 +1,6 @@
 ﻿
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.UI;
 using DG.Tweening;
 
 public class StartButtonBlink : MonoBehaviour
@@ -8,11 +8,12 @@ public class StartButtonBlink : MonoBehaviour
     // Start is called before the first frame update
     public GameObject startButton;
 
-    private Image img;
+    public Image img;
+
+    public float blinkMultiplier = 4;
 
     void Start()
     {
-       // img = startButton.GetComponent<Image>();
 
         gameObject.transform.localScale = Vector3.zero;
         gameObject.transform.DOScale(1, 0.6f).SetEase(Ease.OutElastic).Play();
@@ -22,7 +23,7 @@ public class StartButtonBlink : MonoBehaviour
     void Update()
     {
 
-        //img.tintColor = new Color(1, 1, 1, Mathf.PingPong(Time.time, 1f)); // wtf, should work
+        img.color = new Color(1, 1, 1, Mathf.Round(Mathf.PingPong(Time.time*blinkMultiplier, 1f)));
         
     }
 }

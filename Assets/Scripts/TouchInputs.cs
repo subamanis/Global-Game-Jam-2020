@@ -13,6 +13,8 @@ public class TouchInputs : MonoBehaviour
 
     public float flingDelta = .2f;
 
+    public bool controlsEnabled = true;
+
     private enum Modes { None, Rotation, Speed, Fling };
 
     private Modes userInputMode = Modes.None;
@@ -37,6 +39,10 @@ public class TouchInputs : MonoBehaviour
 
     void Update()
     {
+
+        if (!controlsEnabled) 
+            return;
+
         if (Input.GetMouseButtonDown(0))
         {
             touchPoint.enabled = true;
