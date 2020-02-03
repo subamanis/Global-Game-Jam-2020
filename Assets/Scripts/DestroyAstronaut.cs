@@ -86,7 +86,7 @@ public class DestroyAstronaut : MonoBehaviour
     {
         UFOAI[] ufos = FindObjectsOfType<UFOAI>();
         foreach (UFOAI ufo in ufos) {
-            ufo.chasing = true;
+            ufo.ActivateUFO();
         }
     }
 
@@ -94,7 +94,7 @@ public class DestroyAstronaut : MonoBehaviour
     {
         UFOAI[] ufos = FindObjectsOfType<UFOAI>();
         foreach (UFOAI ufo in ufos) {
-            ufo.chasing = false;
+            ufo.DeactivateUFO();
         }
     }
 
