@@ -7,6 +7,10 @@
 You are an astronaut lost in space, suddenly your thruster malfunctions & you're blasted in pieces! but wait... you can still repair yourself, somewhat faithfully that is.
 
 
+**Istallation**
+
+You can download an [Android APK](https://mega.nz/#!qZU3FQqL!1Tly9bI58-Ruf-iFLedEIsSWKAGqfeS7Xx1QkGdGIhw) or clone and import the project in Unity
+
 
 **Controls**
 
