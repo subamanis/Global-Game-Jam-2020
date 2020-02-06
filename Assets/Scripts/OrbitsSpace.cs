@@ -11,7 +11,7 @@ public class OrbitsSpace : MonoBehaviour
     private SpaceGameManager spaceGameManager;
 
     public bool startWithRandomVelocity = false;
-    public float maxVelocity = 10f;
+    public float maxVelocity = 15f;
     public float maxAngularVelocity = 90f;
 
     public AudioSource pickup;

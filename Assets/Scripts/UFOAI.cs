@@ -50,13 +50,15 @@ public class UFOAI : MonoBehaviour
 
     public void ActivateUFO() 
     {
-        chaseInterval = Random.Range(0.5f, 2.3f);
+        chaseInterval = Random.Range(4f, 6f);
 
         chasingSequence = DOTween.Sequence();
         
         chasingSequence.InsertCallback(chaseInterval, () => chasing = true);
 
-        chasingSequence.InsertCallback(chaseInterval*20, () => chasing = false);
+        chasingSequence.InsertCallback(chaseInterval*2, () => chasing = false);
+
+        chasingSequence.AppendInterval(chaseInterval);
         
         chasingSequence.SetLoops(-1).SetLink(gameObject).Play();
     }
@@ -86,10 +88,10 @@ public class UFOAI : MonoBehaviour
 
             Vector2 direction = new Vector2(collision.contacts[0].point.x, collision.contacts[0].point.y) - new Vector2(transform.position.x, transform.position.y);
 
-            float force = 600;
+            float force = 300;
             collision.gameObject.GetComponent<Rigidbody2D>().AddForce(direction*force);
 
-            gameObject.GetComponent<Rigidbody2D>().AddForce(-direction.normalized*force);
+            gameObject.GetComponent<Rigidbody2D>().AddForce(-direction.normalized*force*4);
 
         //}
     }
